@@ -1,17 +1,12 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.controllerUser;
 
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoney;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser.HoldersControllerInterface;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Checking;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.CreditCard;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Money;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Savings;
+import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.services.interfacesUser.HoldersInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HoldersController implements HoldersControllerInterface {
@@ -22,22 +17,28 @@ public class HoldersController implements HoldersControllerInterface {
     //------ HOLDERS ACCESS BALANCE SAVINGS ACCOUNT---------
     @GetMapping("/holdersAccessBalanceSavingsAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Savings getSavingAccountByBalance(@PathVariable Long id, Money balance) {
-        return holdersService.getSavingAccountByBalance(id, balance);
+    public Savings getSavingAccountByBalance(@PathVariable Long holderId, Money balance) {
+        return holdersService.getSavingAccountByBalance(holderId, balance);
     }
 
     //------ HOLDERS ACCESS BALANCE CHECKING ACCOUNT---------
     @GetMapping("/holdersAccessBalanceCheckingAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Checking getCheckingAccountByBalance(Long id, Money balance) {
-        return holdersService.getCheckingAccountByBalance(id, balance);
+    public Checking getCheckingAccountByBalance(Long holderId, Money balance) {
+        return holdersService.getCheckingAccountByBalance(holderId, balance);
     }
 
     //------ HOLDERS ACCESS BALANCE CREDIT CARD ACCOUNT---------
     @GetMapping("/holdersAccessBalanceCreditCardAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CreditCard getCreditCardAccountByBalance(Long id, Money balance) {
-        return holdersService.getCreditCardAccountByBalance(id, balance);
+    public CreditCard getCreditCardAccountByBalance(Long holderId, Money balance) {
+        return holdersService.getCreditCardAccountByBalance(holderId, balance);
+    }
+
+    //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
+    @PatchMapping("/holdersMakeTransfer/{id}")
+    public Account makeTransferToAccount(@PathVariable Long holderAccountId, @RequestBody HolderTransferMoney holderTransferMoney) {
+        return holdersService.makeTransferToAccount(holderAccountId, holderTransferMoney);
     }
 
 }

@@ -3,6 +3,7 @@ package com.IronHack.MidtermProject.Midterm.Project.entity.accounts;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -20,7 +21,7 @@ public abstract class Account {
     @Embedded
     @AttributeOverrides({@AttributeOverride(name = "currency", column = @Column(name = "currency_penaltyFee")),
             @AttributeOverride(name = "amount", column = @Column(name = "amount_penaltyFee"))})
-    private Money penaltyFee;
+    private Money penaltyFee = new Money(new BigDecimal(40));
 
 
     @ManyToOne
@@ -41,9 +42,8 @@ public abstract class Account {
     public Account() {
     }
 
-    public Account(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
+    public Account(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
         this.balance = balance;
-        this.penaltyFee = penaltyFee;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
         this.creationDate = creationDate;

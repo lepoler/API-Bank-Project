@@ -13,6 +13,6 @@ public interface SavingsRepository extends JpaRepository<Savings, Long> {
 
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
-    Optional<Savings> findByBalanceAndPrimaryOwnerAndSecondaryOwnerAndCreationDate(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate);
+    Optional<Savings> findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(Money balance, Long primaryOwner, Long secondaryOwner, LocalDate creationDate);
 
 }

@@ -1,39 +1,44 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser;
 
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Checking;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.CreditCard;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Money;
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Savings;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccount;
+import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Admin;
 
 public interface AdminControllerInterface {
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
-    Savings createSavingsAccount(Admin id, Savings savings);
+    Savings createSavingsAccount(AdminCreateAccount adminCreateAccount);
 
     //------ ADMIN CREATE CHECKING ACCOUNT---------
-    Checking createCheckingAccount(Admin id, Checking checking);
+    Account createCheckingAccount(AdminCreateAccount adminCreateAccount);
 
     //------ ADMIN CREATE CREDIT CARD ACCOUNT---------
-    CreditCard createCreditCardAccount(Admin id, CreditCard creditCard);
+    CreditCard createCreditCardAccount(AdminCreateAccount adminCreateAccount);
 
-    //------ ADMIN MODIFY BALANCE SAVING ACCOUNT---------
-    Savings modifyBalanceSavingsAccount(Long id, Money balance);
+    //------ ADMIN MODIFY BALANCE ACCOUNTS---------
+    Account modifyBalanceAccounts(Long accountId, Money balance);
+
+    /*//------ ADMIN MODIFY BALANCE SAVING ACCOUNT---------
+    Savings modifyBalanceSavingsAccount(Long accountId, Money balance);
 
     //------ ADMIN MODIFY BALANCE CHECKING ACCOUNT---------
-    Checking modifyBalanceCheckingAccount (Long id, Money balance);
+    Checking modifyBalanceCheckingAccount (Long accountId, Money balance);
 
     //------ ADMIN MODIFY BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard modifyBalanceCreditCardAccount (Long id, Money balance);
+    CreditCard modifyBalanceCreditCardAccount (Long accountId, Money balance);
+    */
 
     //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
-    Savings getSavingAccountByBalance(Long id, Money balance);
+    Savings getSavingAccountByBalance(Long accountId, Money balance);
 
     //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
-    Checking getCheckingAccountByBalance(Long id, Money balance);
+    Checking getCheckingAccountByBalance(Long accountId, Money balance);
 
     //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard getCreditCardAccountByBalance(Long id, Money balance);
+    CreditCard getCreditCardAccountByBalance(Long accountId, Money balance);
+
+    //------ ADMIN DELETE ACCOUNT---------
+    Account deleteAccount(Long accountId);
 }
 
 

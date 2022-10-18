@@ -11,6 +11,10 @@ public class Admin extends User {
 
     //--------------------------- CONSTRUCTORS: -------------------------
 
+    public Admin(String name) {
+        super(name);
+    }
+
     public Admin() {
     }
 

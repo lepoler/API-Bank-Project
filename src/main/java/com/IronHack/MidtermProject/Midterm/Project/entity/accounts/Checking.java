@@ -4,6 +4,7 @@ import com.IronHack.MidtermProject.Midterm.Project.enums.Status;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -12,12 +13,12 @@ public class Checking extends Account {
     @Embedded
     @AttributeOverrides({@AttributeOverride(name = "currency", column = @Column(name = "currency_minimAmount")),
             @AttributeOverride(name = "amount", column = @Column(name = "amount_minimAmount"))})
-    private Money minimAmount;
+    private final Money minimBalance =  new Money(new BigDecimal(250));
 
     @Embedded
     @AttributeOverrides({@AttributeOverride(name = "currency", column = @Column(name = "currency_monthlyMaintenanceFee")),
             @AttributeOverride(name = "amount", column = @Column(name = "amount_monthlyMaintenanceFee"))})
-    private Money monthlyMaintenanceFee;
+    private final Money monthlyMaintenanceFee = new Money(new BigDecimal(12));
 
     private Status status;
 
@@ -29,38 +30,33 @@ public class Checking extends Account {
     public Checking() {
     }
 
-    public Checking(Money minimAmount, Money monthlyMaintenanceFee, Status status) {
-        this.minimAmount = minimAmount;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-        this.status = status;
+    public Checking(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
+        super(balance, primaryOwner, secondaryOwner, creationDate);
+        this.status = Status.ACTIVE;
     }
-
-    public Checking(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate, Money minimAmount, Money monthlyMaintenanceFee, Status status) {
-        super(balance, penaltyFee, primaryOwner, secondaryOwner, creationDate);
-        this.minimAmount = minimAmount;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-        this.status = status;
-    }
-
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 
 
-    public Money getMinimAmount() {
-        return minimAmount;
+    @Override
+    public void setBalance(Money balance) {
+        if(balance.getAmount().compareTo(minimBalance.getAmount()) == -1){
+            balance.getAmount().subtract(getPenaltyFee().getAmount());
+        }
+        super.setBalance(balance);
     }
 
-    public void setMinimAmount(Money minimAmount) {
-        this.minimAmount = minimAmount;
+    public Money getMinimBalance() {
+        return minimBalance;
     }
+
+
 
     public Money getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;
     }
 
-    public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-    }
+
 
     public Status getStatus() {
         return status;

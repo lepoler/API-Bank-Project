@@ -19,10 +19,9 @@ public class StudentChecking extends Account {
     public StudentChecking() {
     }
 
-    public StudentChecking(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner,
-                           LocalDate creationDate, Status status) {
-        super(balance, penaltyFee, primaryOwner, secondaryOwner, creationDate);
-        this.status = status;
+    public StudentChecking(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
+        super(balance, primaryOwner, secondaryOwner, creationDate);
+        this.status = Status.ACTIVE;
     }
 
     //--------------------------- GETTERS & SETTERS: -------------------------
