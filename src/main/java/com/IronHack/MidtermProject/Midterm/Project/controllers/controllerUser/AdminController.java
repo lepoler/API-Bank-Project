@@ -44,7 +44,7 @@ public class AdminController implements AdminControllerInterface {
         return adminService.createCreditCardAccount(adminCreateAccount);
     }
 
-    //------ ADMIN MODIFY BALANCE SAVING ACCOUNT---------
+    //------ ADMIN MODIFY BALANCE ACCOUNT---------
     @PatchMapping("/admin/modifyBalanceAccounts/{id}")
     public Account modifyBalanceAccounts(@PathVariable Long accountId,@RequestBody Money balance) {
         return adminService.modifyBalanceAccounts(accountId, balance);
