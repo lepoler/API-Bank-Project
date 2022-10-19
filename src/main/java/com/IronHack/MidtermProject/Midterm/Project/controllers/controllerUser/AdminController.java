@@ -45,7 +45,7 @@ public class AdminController implements AdminControllerInterface {
     }
 
     //------ ADMIN MODIFY BALANCE ACCOUNT---------
-    @PatchMapping("/admin/modifyBalanceAccounts/{id}")
+    @PatchMapping("/admin/modifyBalanceAccounts/{accountId}")
     public Account modifyBalanceAccounts(@PathVariable Long accountId,@RequestBody Money balance) {
         return adminService.modifyBalanceAccounts(accountId, balance);
     }
@@ -68,14 +68,14 @@ public class AdminController implements AdminControllerInterface {
         return  adminService.modifyBalanceCreditCardAccount(accountId, balance);
     }*/
 
-    //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
-    @GetMapping("/adminAccessBalanceSavingsAccount/{id}")
+    //------ ADMIN ACCESS BALANCE ACCOUNT---------
+    @GetMapping("/adminAccessBalanceAccount/{accountId}")
     @ResponseStatus(HttpStatus.OK)
-    public Savings getSavingAccountByBalance(@PathVariable Long accountId) {
+    public Money getSavingAccountByBalance(@PathVariable Long accountId) {
         return adminService.getSavingAccountByBalance(accountId);
     }
 
-    //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
+    /*//------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
     @GetMapping("/adminAccessBalanceCheckingAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Checking getCheckingAccountByBalance(@PathVariable Long accountId) {
@@ -87,10 +87,10 @@ public class AdminController implements AdminControllerInterface {
     @ResponseStatus(HttpStatus.OK)
     public CreditCard getCreditCardAccountByBalance(@PathVariable Long accountId) {
         return adminService.getCreditCardAccountByBalance(accountId);
-    }
+    }*/
 
     //------ ADMIN DELETE ACCOUNT---------
-    @DeleteMapping("/adminDeleteAccount/{id}")
+    @DeleteMapping("/adminDeleteAccount/{accountId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAccount(@PathVariable Long accountId) {
 

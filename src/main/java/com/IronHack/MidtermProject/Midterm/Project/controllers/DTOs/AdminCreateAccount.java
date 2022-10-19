@@ -44,6 +44,14 @@ public class AdminCreateAccount {
     public AdminCreateAccount() {
     }
 
+    public AdminCreateAccount(Long adminId, Long primaryOwner, BigDecimal balance, LocalDate creationDate, Address address) {
+        this.adminId = adminId;
+        this.primaryOwner = primaryOwner;
+        this.balance = balance;
+        this.creationDate = creationDate;
+        this.address = address;
+    }
+
     public AdminCreateAccount(Long adminId, Long primaryOwner, Long secondaryOwner, BigDecimal balance,
                               BigDecimal minimBalance, LocalDate creationDate, Address address, Address secondaryAddress,
                               BigDecimal interestRate) {

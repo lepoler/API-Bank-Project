@@ -31,14 +31,14 @@ public interface AdminInterface {
     CreditCard modifyBalanceCreditCardAccount (Long accountId, Money balance);
     */
 
-    //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
-    Savings getSavingAccountByBalance(Long accountId);
+    //------ ADMIN ACCESS BALANCE ACCOUNT---------
+    Money getSavingAccountByBalance(Long accountId);
 
-    //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
+    /*//------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
     Checking getCheckingAccountByBalance(Long accountId);
 
     //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard getCreditCardAccountByBalance(Long accountId);
+    CreditCard getCreditCardAccountByBalance(Long accountId);*/
 
     //------ ADMIN DELETE ACCOUNT---------
     void deleteAccount(Long accountId);

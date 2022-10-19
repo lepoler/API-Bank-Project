@@ -19,8 +19,7 @@ import java.util.function.Function;
 @Repository
 public interface CheckingsRepository extends JpaRepository<Checking, Long> {
 
-    //------ ADMIN CREATE CHECKING ACCOUNT---------
-    Optional <Checking> findByBalanceAndPrimaryOwnerAndSecondaryOwnerAndCreationDate(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate);
+
 
 
 }

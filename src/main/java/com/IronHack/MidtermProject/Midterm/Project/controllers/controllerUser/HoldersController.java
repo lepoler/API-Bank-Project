@@ -15,24 +15,24 @@ public class HoldersController implements HoldersControllerInterface {
     HoldersInterface holdersService;
 
     //------ HOLDERS ACCESS BALANCE SAVINGS ACCOUNT---------
-    @GetMapping("/holdersAccessBalanceSavingsAccount/{id}")
+    @GetMapping("/holdersAccessBalanceSavingsAccount/{holderId}")
     @ResponseStatus(HttpStatus.OK)
-    public Savings getSavingAccountByBalance(@PathVariable Long holderId, Money balance) {
-        return holdersService.getSavingAccountByBalance(holderId, balance);
+    public Savings getSavingAccountByBalance(@PathVariable Long holderId) {
+        return holdersService.getSavingAccountByBalance(holderId);
     }
 
     //------ HOLDERS ACCESS BALANCE CHECKING ACCOUNT---------
-    @GetMapping("/holdersAccessBalanceCheckingAccount/{id}")
+    @GetMapping("/holdersAccessBalanceCheckingAccount/{holderId}")
     @ResponseStatus(HttpStatus.OK)
-    public Checking getCheckingAccountByBalance(Long holderId, Money balance) {
-        return holdersService.getCheckingAccountByBalance(holderId, balance);
+    public Checking getCheckingAccountByBalance(@PathVariable Long holderId) {
+        return holdersService.getCheckingAccountByBalance(holderId);
     }
 
     //------ HOLDERS ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    @GetMapping("/holdersAccessBalanceCreditCardAccount/{id}")
+    @GetMapping("/holdersAccessBalanceCreditCardAccount/{holderId}")
     @ResponseStatus(HttpStatus.OK)
-    public CreditCard getCreditCardAccountByBalance(Long holderId, Money balance) {
-        return holdersService.getCreditCardAccountByBalance(holderId, balance);
+    public CreditCard getCreditCardAccountByBalance(@PathVariable Long holderId) {
+        return holdersService.getCreditCardAccountByBalance(holderId);
     }
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------

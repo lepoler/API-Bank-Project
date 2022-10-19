@@ -1,6 +1,7 @@
 package com.IronHack.MidtermProject.Midterm.Project.entity.users;
 
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,9 +11,11 @@ import java.util.List;
 public class Holders extends User {
 
     @OneToMany(mappedBy = "primaryOwner")
+    @JsonIgnore
     List<Account> accountListPrimary;
 
     @OneToMany(mappedBy = "secondaryOwner")
+    @JsonIgnore
     List<Account> accountListSecondary;
 
 

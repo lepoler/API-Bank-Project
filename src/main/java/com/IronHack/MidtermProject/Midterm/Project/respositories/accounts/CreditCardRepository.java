@@ -13,9 +13,5 @@ import java.util.Optional;
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
 
-    //------ ADMIN CREATE CREDIT CARD ACCOUNT---------
-    Optional<CreditCard> findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(Money balance, Long primaryOwner, Long secondaryOwner, LocalDate creationDate);
-
-
 
 }

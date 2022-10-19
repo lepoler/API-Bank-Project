@@ -29,13 +29,12 @@ public class AdminService implements AdminInterface {
     AccountRepository accountRepository;
     @Autowired
     CreditCardRepository creditCardRepository;
-
     @Autowired
     StudentCheckingRepository studentCheckingRepository;
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
     public Savings createSavingsAccount(AdminCreateAccount adminCreateAccount) {
-        if(savingsRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
+        if(accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
                 new Money(adminCreateAccount.getBalance()), adminCreateAccount.getPrimaryOwner(),
                 adminCreateAccount.getSecondaryOwner(), adminCreateAccount.getCreationDate()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -77,7 +76,7 @@ public class AdminService implements AdminInterface {
 
     //------ ADMIN CREATE CREDIT CARD ACCOUNT---------
     public CreditCard createCreditCardAccount(AdminCreateAccount adminCreateAccount) {
-        if (creditCardRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
+        if (accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
                 new Money(adminCreateAccount.getBalance()), adminCreateAccount.getPrimaryOwner(),
                 adminCreateAccount.getSecondaryOwner(), adminCreateAccount.getCreationDate()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
@@ -124,24 +123,15 @@ public class AdminService implements AdminInterface {
         return creditCardRepository.save(creditCard1);
     }*/
 
-    //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
-    public Savings getSavingAccountByBalance(Long accountId) {
-        return savingsRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Savings Account with the given id does not exist"));
+    //------ ADMIN ACCESS BALANCE ACCOUNT---------
+    public Money getSavingAccountByBalance(Long accountId) {
+        return accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Account with the given id does not exist")).getBalance();
     }
 
-    //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
-    public Checking getCheckingAccountByBalance(Long accountId) {
-        return checkingsRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Checking Account with the given id does not exist"));
-    }
-
-    //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    public CreditCard getCreditCardAccountByBalance(Long accountId) {
-        return creditCardRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Credit Card Account with the given id does not exist"));
-    }
 
     //------ ADMIN DELETE ACCOUNT---------
     public void deleteAccount(Long accountId) {
-        //Account deleteAccount = accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this account doesn't exist"));
+        Account deleteAccount = accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this account doesn't exist"));
         accountRepository.deleteById(accountId);
 
 

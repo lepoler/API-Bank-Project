@@ -12,7 +12,5 @@ import java.util.Optional;
 public interface SavingsRepository extends JpaRepository<Savings, Long> {
 
 
-    //------ ADMIN CREATE SAVING ACCOUNT---------
-    Optional<Savings> findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(Money balance, Long primaryOwner, Long secondaryOwner, LocalDate creationDate);
 
 }
