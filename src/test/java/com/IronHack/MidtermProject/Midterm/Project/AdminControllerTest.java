@@ -11,7 +11,9 @@ import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.Credit
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.SavingsRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.AdminRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.HoldersRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,7 +62,7 @@ public class AdminControllerTest {
 
     private MockMvc mockMvc;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
 
 
@@ -131,12 +133,13 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Modify Balance Account Savings")
     void patch_Account_Savings_ModifyBalance_isOk() throws Exception {
-        Savings savings = new Savings(new Money(new BigDecimal(333)),holder, holder2,
-                LocalDate.of(1988, 07, 18));
-        String balance = ObjectMapper.writeValueAsString(savings);
+        Savings savings = savingsRepository.save(new Savings(new Money(new BigDecimal(333)),holder, holder2,
+                LocalDate.of(1988, 07, 18)));
+
+        String balance = objectMapper.writeValueAsString(savings);
         System.out.println(balance);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/{id}").content(balance).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/1").content(balance).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
         assertTrue(savingsRepository.findById(savings.getId()).isPresent());
@@ -145,12 +148,12 @@ public class AdminControllerTest {
     @Test
     @DisplayName("Modify Balance Account Checking")
     void patch_Account_Checking_ModifyBalance_isOk() throws Exception {
-        Checking checking = new Checking(new Money(new BigDecimal(333)),holder, holder2,
-                LocalDate.of(1988, 07, 18));
-        String balance = ObjectMapper.writeValueAsString(checking);
+        Checking checking = checkingsRepository.save(new Checking(new Money(new BigDecimal(333)),holder, holder2,
+                LocalDate.of(1988, 07, 18)));
+        String balance = objectMapper.writeValueAsString(checking);
         System.out.println(balance);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/{id}").content(balance).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/1").content(balance).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
         assertTrue(savingsRepository.findById(checking.getId()).isPresent());
@@ -158,17 +161,32 @@ public class AdminControllerTest {
 
     @Test
     @DisplayName("Modify Balance Account CreditCard")
-    void patch_Account_Checking_ModifyBalance_isOk() throws Exception {
-        CreditCard creditCard = new CreditCard(new Money(new BigDecimal(333)),holder, holder2,
-                LocalDate.of(1988, 07, 18));
-        String balance = ObjectMapper.writValueAsString(creditCard);
+    void patch_Account_CreditCard_ModifyBalance_isOk() throws Exception {
+        CreditCard creditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(333)),holder, holder2,
+                LocalDate.of(1988, 07, 18)));
+        String balance = objectMapper.writeValueAsString(creditCard);
         System.out.println(balance);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/{id}").content(balance).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/1").content(balance).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
         assertTrue(savingsRepository.findById(creditCard.getId()).isPresent());
     }
+
+    @Test
+    @DisplayName("Delete Credit Card Account")
+    void delete_CreditCard_Account_isOk() throws Exception {
+        CreditCard creditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(333)),holder, holder2,
+                LocalDate.of(1988, 07, 18)));
+        String creditCard2 = objectMapper.writeValueAsString(creditCard);
+        System.out.println(creditCard2);
+
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/1").content(creditCard2).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        assertTrue(savingsRepository.findById(creditCard.getId()).isEmpty());
+    }
+
 
 
 

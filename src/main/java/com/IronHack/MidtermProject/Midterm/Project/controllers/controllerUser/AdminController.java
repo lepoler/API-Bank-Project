@@ -71,29 +71,30 @@ public class AdminController implements AdminControllerInterface {
     //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
     @GetMapping("/adminAccessBalanceSavingsAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Savings getSavingAccountByBalance(@PathVariable Long accountId, Money balance) {
-        return adminService.getSavingAccountByBalance(accountId, balance);
+    public Savings getSavingAccountByBalance(@PathVariable Long accountId) {
+        return adminService.getSavingAccountByBalance(accountId);
     }
 
     //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
     @GetMapping("/adminAccessBalanceCheckingAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Checking getCheckingAccountByBalance(@PathVariable Long accountId, Money balance) {
-        return adminService.getCheckingAccountByBalance(accountId, balance);
+    public Checking getCheckingAccountByBalance(@PathVariable Long accountId) {
+        return adminService.getCheckingAccountByBalance(accountId);
     }
 
     //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
     @GetMapping("/adminAccessBalanceCreditCardAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CreditCard getCreditCardAccountByBalance(@PathVariable Long accountId, Money balance) {
-        return adminService.getCreditCardAccountByBalance(accountId, balance);
+    public CreditCard getCreditCardAccountByBalance(@PathVariable Long accountId) {
+        return adminService.getCreditCardAccountByBalance(accountId);
     }
 
     //------ ADMIN DELETE ACCOUNT---------
-    @PostMapping("/adminDeleteAccount/{id}")
+    @DeleteMapping("/adminDeleteAccount/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Account deleteAccount(@PathVariable Long accountId) {
-        return adminService.deleteAccount(accountId);
+    public void deleteAccount(@PathVariable Long accountId) {
+
+         adminService.deleteAccount(accountId);
     }
 
 

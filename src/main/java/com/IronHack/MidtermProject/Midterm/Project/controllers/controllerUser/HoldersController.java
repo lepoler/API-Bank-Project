@@ -36,9 +36,9 @@ public class HoldersController implements HoldersControllerInterface {
     }
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
-    @PatchMapping("/holdersMakeTransfer/{id}")
-    public Account makeTransferToAccount(@PathVariable Long holderAccountId, @RequestBody HolderTransferMoney holderTransferMoney) {
-        return holdersService.makeTransferToAccount(holderAccountId, holderTransferMoney);
+    @PatchMapping("/holdersMakeTransfer/")
+    public Account makeTransferToAccount(@RequestBody HolderTransferMoney holderTransferMoney) {
+        return holdersService.makeTransferToAccount(holderTransferMoney);
     }
 
 }

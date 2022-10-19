@@ -15,5 +15,5 @@ public interface HoldersControllerInterface {
     CreditCard getCreditCardAccountByBalance(Long holderId, Money balance);
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
-    Account makeTransferToAccount (Long holderAccountId, HolderTransferMoney holderTransferMoney);
+    Account makeTransferToAccount (HolderTransferMoney holderTransferMoney);
 }

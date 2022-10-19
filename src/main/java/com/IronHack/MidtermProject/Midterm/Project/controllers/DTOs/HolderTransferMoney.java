@@ -6,7 +6,8 @@ public class HolderTransferMoney {
 
     private Long holderId;
     private Long holderAccountId;
-    //private Long holderReceivesId;
+
+    private Long holderReceivesId;
     private Long holderAccountReceivesId;
     private BigDecimal transferAmount;
 
@@ -22,14 +23,15 @@ public class HolderTransferMoney {
     public HolderTransferMoney() {
     }
 
-    public HolderTransferMoney(Long holderId, Long holderAccountId, Long holderAccountReceivesId, BigDecimal transferAmount) {
+    public HolderTransferMoney(Long holderId, Long holderAccountId, Long holderReceivesId, Long holderAccountReceivesId, BigDecimal transferAmount) {
         this.holderId = holderId;
         this.holderAccountId = holderAccountId;
+        this.holderReceivesId = holderReceivesId;
         this.holderAccountReceivesId = holderAccountReceivesId;
         this.transferAmount = transferAmount;
     }
 
-    //--------------------------- GETTERS & SETTERS: -------------------------
+//--------------------------- GETTERS & SETTERS: -------------------------
 
     public Long getHolderId() {
         return holderId;
@@ -63,6 +65,13 @@ public class HolderTransferMoney {
         this.transferAmount = transferAmount;
     }
 
+    public Long getHolderReceivesId() {
+        return holderReceivesId;
+    }
+
+    public void setHolderReceivesId(Long holderReceivesId) {
+        this.holderReceivesId = holderReceivesId;
+    }
 
     /*public void setBalance(BigDecimal balance) {
         if(balance.compareTo(transferAmount) == -1){

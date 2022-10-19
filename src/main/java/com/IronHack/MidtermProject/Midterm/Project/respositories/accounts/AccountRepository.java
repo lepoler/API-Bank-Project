@@ -14,6 +14,4 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     //------ ADMIN CREATE CHECKING or STUDENT ACCOUNT---------
     Optional<Account> findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(Money balance, Long primaryOwner, Long secondaryOwner, LocalDate creationDate);
 
-    Account findByAgeBefore(LocalDate dateOfBirth);
-
 }

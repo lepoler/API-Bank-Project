@@ -29,16 +29,16 @@ public interface AdminControllerInterface {
     */
 
     //------ ADMIN ACCESS BALANCE SAVINGS ACCOUNT---------
-    Savings getSavingAccountByBalance(Long accountId, Money balance);
+    Savings getSavingAccountByBalance(Long accountId);
 
     //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
-    Checking getCheckingAccountByBalance(Long accountId, Money balance);
+    Checking getCheckingAccountByBalance(Long accountId);
 
     //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard getCreditCardAccountByBalance(Long accountId, Money balance);
+    CreditCard getCreditCardAccountByBalance(Long accountId);
 
     //------ ADMIN DELETE ACCOUNT---------
-    Account deleteAccount(Long accountId);
+    void deleteAccount(Long accountId);
 }
 
 
