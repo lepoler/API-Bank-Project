@@ -2,7 +2,7 @@ package com.IronHack.MidtermProject.Midterm.Project.services.servicesUser;
 
 
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccount;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.*;
@@ -33,62 +33,62 @@ public class AdminService implements AdminInterface {
     StudentCheckingRepository studentCheckingRepository;
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
-    public Savings createSavingsAccount(AdminCreateAccount adminCreateAccount) {
+    public Savings createSavingsAccount(AdminCreateAccountDTO adminCreateAccountDTO) {
         if(accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
-                new Money(adminCreateAccount.getBalance()), adminCreateAccount.getPrimaryOwner(),
-                adminCreateAccount.getSecondaryOwner(), adminCreateAccount.getCreationDate()).isPresent()) {
+                new Money(adminCreateAccountDTO.getBalance()), adminCreateAccountDTO.getPrimaryOwner(),
+                adminCreateAccountDTO.getSecondaryOwner(), adminCreateAccountDTO.getCreationDate()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        Holders primaryOwner = holdersRepository.findById(adminCreateAccount.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Holders primaryOwner = holdersRepository.findById(adminCreateAccountDTO.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Holders secondaryOwner = null;
-        if(adminCreateAccount.getSecondaryOwner() != null) {
-            secondaryOwner = holdersRepository.findById(adminCreateAccount.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(adminCreateAccountDTO.getSecondaryOwner() != null) {
+            secondaryOwner = holdersRepository.findById(adminCreateAccountDTO.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
-        return savingsRepository.save(new Savings(new Money(adminCreateAccount.getBalance()), primaryOwner,
-                secondaryOwner, adminCreateAccount.getCreationDate(), new Money(adminCreateAccount.getMinimBalance()),
-                new Money(adminCreateAccount.getInterestRate())));
+        return savingsRepository.save(new Savings(new Money(adminCreateAccountDTO.getBalance()), new Money(new BigDecimal(40)), primaryOwner,
+                secondaryOwner, "1234", adminCreateAccountDTO.getCreationDate(), new Money(adminCreateAccountDTO.getMinimBalance()),
+                new Money(adminCreateAccountDTO.getInterestRate())));
 
 
     }
 
     //------ ADMIN CREATE CHECKING ACCOUNT---------
-    public Account createCheckingAccount(AdminCreateAccount adminCreateAccount) {
+    public Account createCheckingAccount(AdminCreateAccountDTO adminCreateAccountDTO) {
         if(accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
-                new Money(adminCreateAccount.getBalance()), adminCreateAccount.getPrimaryOwner(),
-                adminCreateAccount.getSecondaryOwner(), adminCreateAccount.getCreationDate()).isPresent()) {
+                new Money(adminCreateAccountDTO.getBalance()), adminCreateAccountDTO.getPrimaryOwner(),
+                adminCreateAccountDTO.getSecondaryOwner(), adminCreateAccountDTO.getCreationDate()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        Holders primaryOwner = holdersRepository.findById(adminCreateAccount.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Holders primaryOwner = holdersRepository.findById(adminCreateAccountDTO.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Holders secondaryOwner = null;
-        if(adminCreateAccount.getSecondaryOwner() != null) {
-            secondaryOwner = holdersRepository.findById(adminCreateAccount.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(adminCreateAccountDTO.getSecondaryOwner() != null) {
+            secondaryOwner = holdersRepository.findById(adminCreateAccountDTO.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
         if(primaryOwner.getDateOfBirth().isBefore(LocalDate.of(1998, 01, 01))){
-            return checkingsRepository.save(new Checking(new Money(adminCreateAccount.getBalance()), primaryOwner,
-                    secondaryOwner, adminCreateAccount.getCreationDate()));
+            return checkingsRepository.save(new Checking(new Money(adminCreateAccountDTO.getBalance()),new Money(new BigDecimal(40)), primaryOwner,
+                    secondaryOwner, "1234", adminCreateAccountDTO.getCreationDate()));
         } else {
-            return studentCheckingRepository.save(new StudentChecking(new Money(adminCreateAccount.getBalance()), primaryOwner,
-                    secondaryOwner, adminCreateAccount.getCreationDate()));
+            return studentCheckingRepository.save(new StudentChecking(new Money(adminCreateAccountDTO.getBalance()), new Money(), primaryOwner,
+                    secondaryOwner, adminCreateAccountDTO.getSecretKey(), adminCreateAccountDTO.getCreationDate()));
         }
 
 
     }
 
     //------ ADMIN CREATE CREDIT CARD ACCOUNT---------
-    public CreditCard createCreditCardAccount(AdminCreateAccount adminCreateAccount) {
+    public CreditCard createCreditCardAccount(AdminCreateAccountDTO adminCreateAccountDTO) {
         if (accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
-                new Money(adminCreateAccount.getBalance()), adminCreateAccount.getPrimaryOwner(),
-                adminCreateAccount.getSecondaryOwner(), adminCreateAccount.getCreationDate()).isPresent()) {
+                new Money(adminCreateAccountDTO.getBalance()), adminCreateAccountDTO.getPrimaryOwner(),
+                adminCreateAccountDTO.getSecondaryOwner(), adminCreateAccountDTO.getCreationDate()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        Holders primaryOwner = holdersRepository.findById(adminCreateAccount.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Holders primaryOwner = holdersRepository.findById(adminCreateAccountDTO.getPrimaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Holders secondaryOwner = null;
-        if(adminCreateAccount.getSecondaryOwner() != null) {
-            secondaryOwner = holdersRepository.findById(adminCreateAccount.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if(adminCreateAccountDTO.getSecondaryOwner() != null) {
+            secondaryOwner = holdersRepository.findById(adminCreateAccountDTO.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
-            return creditCardRepository.save(new CreditCard(new Money(adminCreateAccount.getBalance()), primaryOwner,
-                    secondaryOwner, adminCreateAccount.getCreationDate(), new Money(adminCreateAccount.getMinimBalance()),
-                    new Money(adminCreateAccount.getInterestRate())));
+            return creditCardRepository.save(new CreditCard(new Money(adminCreateAccountDTO.getBalance()), new Money(new BigDecimal(40)), primaryOwner,
+                    secondaryOwner, "1234", adminCreateAccountDTO.getCreationDate(), new Money(adminCreateAccountDTO.getMinimBalance()),
+                    new Money(adminCreateAccountDTO.getInterestRate())));
     }
 
 

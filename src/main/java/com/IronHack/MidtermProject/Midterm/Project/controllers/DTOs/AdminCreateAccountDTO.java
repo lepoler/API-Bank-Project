@@ -1,8 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs;
 
-import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.Money;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Address;
-import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -10,10 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class AdminCreateAccount {
+public class AdminCreateAccountDTO {
 
-    @NotEmpty
-    private Long adminId;
 
     @Min(value = 1)
     private Long primaryOwner;
@@ -36,26 +32,29 @@ public class AdminCreateAccount {
 
     private LocalDate dateOfBirth;
 
+    private String secretKey;
+
     //-------------------------------------------------------------------
 
     //--------------------------- CONSTRUCTORS: -------------------------
 
 
-    public AdminCreateAccount() {
+    public AdminCreateAccountDTO() {
     }
 
-    public AdminCreateAccount(Long adminId, Long primaryOwner, BigDecimal balance, LocalDate creationDate, Address address) {
-        this.adminId = adminId;
+    public AdminCreateAccountDTO(Long primaryOwner, BigDecimal balance, LocalDate creationDate, Address address, String secretKey) {
+
         this.primaryOwner = primaryOwner;
         this.balance = balance;
         this.creationDate = creationDate;
         this.address = address;
+        this.secretKey = secretKey;
     }
 
-    public AdminCreateAccount(Long adminId, Long primaryOwner, Long secondaryOwner, BigDecimal balance,
-                              BigDecimal minimBalance, LocalDate creationDate, Address address, Address secondaryAddress,
-                              BigDecimal interestRate) {
-        this.adminId = adminId;
+    public AdminCreateAccountDTO(Long primaryOwner, Long secondaryOwner, BigDecimal balance,
+                                 BigDecimal minimBalance, LocalDate creationDate, Address address, Address secondaryAddress,
+                                 String secretKey, BigDecimal interestRate) {
+
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
         this.balance = balance;
@@ -63,6 +62,7 @@ public class AdminCreateAccount {
         this.creationDate = creationDate;
         this.address = address;
         this.secondaryAddress = secondaryAddress;
+        this.secretKey = secretKey;
         this.interestRate = interestRate;
     }
 
@@ -70,14 +70,6 @@ public class AdminCreateAccount {
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 
-
-    public Long getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
-    }
 
     public Long getPrimaryOwner() {
         return primaryOwner;
@@ -150,5 +142,13 @@ public class AdminCreateAccount {
     public void setDateOfBirth(LocalDate dateOfBirth) {
 
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 }

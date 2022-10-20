@@ -2,7 +2,7 @@ package com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs;
 
 import java.math.BigDecimal;
 
-public class HolderTransferMoney {
+public class HolderTransferMoneyDTO {
 
     private Long holderId;
     private Long holderAccountId;
@@ -20,10 +20,10 @@ public class HolderTransferMoney {
     //--------------------------- CONSTRUCTORS: -------------------------
 
 
-    public HolderTransferMoney() {
+    public HolderTransferMoneyDTO() {
     }
 
-    public HolderTransferMoney(Long holderId, Long holderAccountId, Long holderReceivesId, Long holderAccountReceivesId, BigDecimal transferAmount) {
+    public HolderTransferMoneyDTO(Long holderId, Long holderAccountId, Long holderReceivesId, Long holderAccountReceivesId, BigDecimal transferAmount) {
         this.holderId = holderId;
         this.holderAccountId = holderAccountId;
         this.holderReceivesId = holderReceivesId;
@@ -32,6 +32,7 @@ public class HolderTransferMoney {
     }
 
 //--------------------------- GETTERS & SETTERS: -------------------------
+
 
     public Long getHolderId() {
         return holderId;

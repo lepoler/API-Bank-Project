@@ -1,6 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.controllerUser;
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoney;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoneyDTO;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser.HoldersControllerInterface;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.services.interfacesUser.HoldersInterface;
@@ -37,8 +37,8 @@ public class HoldersController implements HoldersControllerInterface {
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
     @PatchMapping("/holdersMakeTransfer/")
-    public Account makeTransferToAccount(@RequestBody HolderTransferMoney holderTransferMoney) {
-        return holdersService.makeTransferToAccount(holderTransferMoney);
+    public Account makeTransferToAccount(@RequestBody HolderTransferMoneyDTO holderTransferMoneyDTO) {
+        return holdersService.makeTransferToAccount(holderTransferMoneyDTO);
     }
 
 }

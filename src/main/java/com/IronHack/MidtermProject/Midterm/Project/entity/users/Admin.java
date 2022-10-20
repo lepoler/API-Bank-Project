@@ -11,9 +11,11 @@ public class Admin extends User {
 
     //--------------------------- CONSTRUCTORS: -------------------------
 
-    public Admin(String name) {
-        super(name);
+
+    public Admin(String name, String username, String password) {
+        super(name, username, password);
     }
+
 
     public Admin() {
     }

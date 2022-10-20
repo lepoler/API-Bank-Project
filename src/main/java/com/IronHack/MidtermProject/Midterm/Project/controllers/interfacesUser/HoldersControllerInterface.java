@@ -1,6 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser;
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoney;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoneyDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 
 public interface HoldersControllerInterface {
@@ -15,5 +15,5 @@ public interface HoldersControllerInterface {
     CreditCard getCreditCardAccountByBalance(Long holderId);
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
-    Account makeTransferToAccount (HolderTransferMoney holderTransferMoney);
+    Account makeTransferToAccount (HolderTransferMoneyDTO holderTransferMoneyDTO);
 }

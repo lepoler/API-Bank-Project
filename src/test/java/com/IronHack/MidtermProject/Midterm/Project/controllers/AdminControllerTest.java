@@ -1,7 +1,5 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers;
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccount;
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoney;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Address;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Admin;
@@ -13,13 +11,13 @@ import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.Credit
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.SavingsRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.AdminRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.HoldersRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,8 +25,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -42,21 +38,18 @@ public class AdminControllerTest {
     AdminRepository adminRepository;
     @Autowired
     CheckingsRepository checkingsRepository;
-
     @Autowired
     SavingsRepository savingsRepository;
-
     @Autowired
     AccountRepository accountRepository;
-
     @Autowired
     HoldersRepository holdersRepository;
-
     @Autowired
     CreditCardRepository creditCardRepository;
-
     @Autowired
     private WebApplicationContext webApplicationContext;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     private Admin admin1;
@@ -73,17 +66,18 @@ public class AdminControllerTest {
 
     @BeforeEach
     void setUp(){
-        admin1 = adminRepository.save(new Admin("Manolo"));
+        admin1 = adminRepository.save(new Admin("Manolo", "Julio", "1234"));
         holder = holdersRepository.save(new Holders("Pol Bermu", LocalDate.of(1998, 01, 01),
-                new Address("calle Falsa", "Springfild", "Russia", "12345")));
+                new Address("calle Falsa", "Springfild", "Russia", "12345"), "Julian", passwordEncoder.encode("1234")));
         holder2 = holdersRepository.save(new Holders("Anna Nana", LocalDate.of(2000, 10, 22),
-                new Address("calle Falsa", "Springfild", "Russia", "12345")));
-        accountChecking = checkingsRepository.save(new Checking(new Money(new BigDecimal(250)),holder, holder2,
-                LocalDate.of(1998, 01, 01)));
-        accountSaving = savingsRepository.save(new Savings(new Money(new BigDecimal(250)),holder, holder2,
-                LocalDate.of(1998, 01, 01)));
-        accountCreditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(250)),holder, holder2,
-                LocalDate.of(1998, 01, 01)));
+                new Address("calle Falsa", "Springfild", "Russia", "12345"), "Pablo", passwordEncoder.encode("1234")));
+        accountSaving = savingsRepository.save(new Savings(new Money(new BigDecimal(800)), new Money(), holder, holder2,
+                "1234", LocalDate.of(1998, 01, 01)));
+        accountChecking = checkingsRepository.save(new Checking(new Money(new BigDecimal(550)), new Money(new BigDecimal(40)), holder2, holder,
+                "1234", LocalDate.of(1977, 01, 01)));
+        accountCreditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(850)),
+                new Money(new BigDecimal(40)), holder, holder2, "1234",
+                LocalDate.of(1958, 01, 01)));
 
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();

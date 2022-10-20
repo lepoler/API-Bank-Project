@@ -11,6 +11,7 @@ import com.IronHack.MidtermProject.Midterm.Project.respositories.users.HoldersRe
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,6 +34,8 @@ public class AdminServiceTest {
     CheckingsRepository checkingsRepository;
     @Autowired
     CreditCardRepository creditCardRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     List<Account> accounts;
     private Holders holder, holder2;
@@ -40,9 +43,9 @@ public class AdminServiceTest {
     @BeforeEach
     void setUp(){
         holder = holdersRepository.save(new Holders("Pol Bermu", LocalDate.of(1998, 01, 01),
-                new Address("calle Falsa", "Springfild", "Russia", "12345")));
+                new Address("calle Falsa", "Springfild", "Russia", "12345"), "Julian", passwordEncoder.encode("1234")));
         holder2 = holdersRepository.save(new Holders("Anna Nana", LocalDate.of(2000, 10, 22),
-                new Address("calle Falsa", "Springfild", "Russia", "12345")));
+                new Address("calle Falsa", "Springfild", "Russia", "12345"), "Pablo", passwordEncoder.encode("1234")));
     }
 
     @AfterEach

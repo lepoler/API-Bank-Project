@@ -30,15 +30,15 @@ public class Checking extends Account {
     public Checking() {
     }
 
-    public Checking(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
-        super(balance, primaryOwner, secondaryOwner, creationDate);
-        this.status = Status.ACTIVE;
+    public Checking(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey, LocalDate creationDate) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
+
     }
+
+
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 
-
-    @Override
     public void setBalance(Money balance) {
         if(balance.getAmount().compareTo(minimBalance.getAmount()) == -1){
             balance.getAmount().subtract(getPenaltyFee().getAmount());
@@ -50,13 +50,9 @@ public class Checking extends Account {
         return minimBalance;
     }
 
-
-
     public Money getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;
     }
-
-
 
     public Status getStatus() {
         return status;
@@ -65,4 +61,5 @@ public class Checking extends Account {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }

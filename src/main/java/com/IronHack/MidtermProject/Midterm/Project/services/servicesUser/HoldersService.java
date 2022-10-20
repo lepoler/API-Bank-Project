@@ -1,6 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.services.servicesUser;
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoney;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoneyDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.AccountRepository;
@@ -46,28 +46,28 @@ public class HoldersService implements HoldersInterface {
     }
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
-    public Account makeTransferToAccount(HolderTransferMoney holderTransferMoney) {
-        Holders makerId = holdersRepository.findById(holderTransferMoney.getHolderId()).orElseThrow(() ->
+    public Account makeTransferToAccount(HolderTransferMoneyDTO holderTransferMoneyDTO) {
+        Holders makerId = holdersRepository.findById(holderTransferMoneyDTO.getHolderId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this Holder doesn't exist"));
-        Optional <Account> account1 = makerId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoney.getHolderAccountId()).findFirst();
+        Optional <Account> account1 = makerId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoneyDTO.getHolderAccountId()).findFirst();
         if(account1.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist");
         }
 
-        Holders receiverId = holdersRepository.findById(holderTransferMoney.getHolderReceivesId()).orElseThrow(() ->
+        Holders receiverId = holdersRepository.findById(holderTransferMoneyDTO.getHolderReceivesId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this Holder receiver doesn't exist"));
-        Optional <Account> account2 = receiverId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoney.getHolderAccountReceivesId()).findFirst();
+        Optional <Account> account2 = receiverId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoneyDTO.getHolderAccountReceivesId()).findFirst();
         if(account2.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist");
         }
 
 
-        if (account1.get().getBalance().getAmount().compareTo(holderTransferMoney.getTransferAmount()) == -1) {
+        if (account1.get().getBalance().getAmount().compareTo(holderTransferMoneyDTO.getTransferAmount()) == -1) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The amount you wan to transfer is higher than you balance");
-        } else if (account1.get().getBalance().getAmount().compareTo(holderTransferMoney.getTransferAmount()) == 0 ||
-                account1.get().getBalance().getAmount().compareTo(holderTransferMoney.getTransferAmount()) == 1) {
-            account1.get().getBalance().decreaseAmount(holderTransferMoney.getTransferAmount());
-            account2.get().getBalance().increaseAmount(holderTransferMoney.getTransferAmount());
+        } else if (account1.get().getBalance().getAmount().compareTo(holderTransferMoneyDTO.getTransferAmount()) == 0 ||
+                account1.get().getBalance().getAmount().compareTo(holderTransferMoneyDTO.getTransferAmount()) == 1) {
+            account1.get().getBalance().decreaseAmount(holderTransferMoneyDTO.getTransferAmount());
+            account2.get().getBalance().increaseAmount(holderTransferMoneyDTO.getTransferAmount());
             accountRepository.save(account2.get());
             return accountRepository.save(account1.get());
         }

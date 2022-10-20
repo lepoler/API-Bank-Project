@@ -30,22 +30,30 @@ public class Savings extends Account {
     public Savings() {
     }
 
-    public Savings(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
-        super(balance, primaryOwner, secondaryOwner, creationDate);
-    }
-
-    public Savings(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate,
-                   Money minimumBalance, Money interestRate) {
-
-        super(balance, primaryOwner, secondaryOwner, creationDate);
+    public Savings(Money minimumBalance, Money interestRate) {
         this.minimumBalance = minimumBalance;
         this.interestRate = interestRate;
-        this.status = Status.ACTIVE;
+
     }
+
+    public Savings(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey,
+                   LocalDate creationDate, Money minimumBalance, Money interestRate) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
+        this.minimumBalance = minimumBalance;
+        this.interestRate = interestRate;
+
+    }
+
+    public Savings(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey,
+                   LocalDate creationDate) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
+
+    }
+
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 
-    @Override
+
     public void setBalance(Money balance) {
         if(balance.getAmount().compareTo(minimumBalance.getAmount()) == -1){
             balance.getAmount().subtract(getPenaltyFee().getAmount());

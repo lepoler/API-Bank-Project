@@ -1,19 +1,18 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser;
 
-import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccount;
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
-import com.IronHack.MidtermProject.Midterm.Project.entity.users.Admin;
 
 public interface AdminControllerInterface {
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
-    Savings createSavingsAccount(AdminCreateAccount adminCreateAccount);
+    Savings createSavingsAccount(AdminCreateAccountDTO adminCreateAccountDTO);
 
     //------ ADMIN CREATE CHECKING ACCOUNT---------
-    Account createCheckingAccount(AdminCreateAccount adminCreateAccount);
+    Account createCheckingAccount(AdminCreateAccountDTO adminCreateAccountDTO);
 
     //------ ADMIN CREATE CREDIT CARD ACCOUNT---------
-    CreditCard createCreditCardAccount(AdminCreateAccount adminCreateAccount);
+    CreditCard createCreditCardAccount(AdminCreateAccountDTO adminCreateAccountDTO);
 
     //------ ADMIN MODIFY BALANCE ACCOUNTS---------
     Account modifyBalanceAccounts(Long accountId, Money balance);

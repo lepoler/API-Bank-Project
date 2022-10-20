@@ -1,6 +1,7 @@
 package com.IronHack.MidtermProject.Midterm.Project.entity.accounts;
 
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
+import com.IronHack.MidtermProject.Midterm.Project.entity.users.ThirdParty;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,6 +34,8 @@ public abstract class Account {
     @JoinColumn(name = "secondary_owner_id")
     private Holders secondaryOwner;
 
+    private String secretKey;
+
     private LocalDate creationDate;
     //-------------------------------------------------------------------
 
@@ -42,10 +45,12 @@ public abstract class Account {
     public Account() {
     }
 
-    public Account(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
+    public Account(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey, LocalDate creationDate) {
         this.balance = balance;
+        this.penaltyFee = penaltyFee;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
+        this.secretKey = secretKey;
         this.creationDate = creationDate;
     }
 
@@ -102,5 +107,13 @@ public abstract class Account {
     public void setPrimaryOwner(Holders primaryOwner) {
 
         this.primaryOwner = primaryOwner;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 }

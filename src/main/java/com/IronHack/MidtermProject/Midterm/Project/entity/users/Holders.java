@@ -44,32 +44,20 @@ public class Holders extends User {
     public Holders() {
     }
 
-    public Holders(String name, LocalDate dateOfBirth, Address address) {
-        super(name);
+    public Holders(String name, LocalDate dateOfBirth, Address address, String username, String passsword) {
+        super(name, username, passsword);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
     }
 
-    public Holders(String name, LocalDate dateOfBirth, Address mail, Address address) {
-        super(name);
+    public Holders(String name, LocalDate dateOfBirth, Address mail, Address address, String username, String passsword) {
+        super(name, username, passsword);
         this.dateOfBirth = dateOfBirth;
         this.mail = mail;
         this.address = address;
     }
 
-    public Holders(List<Account> accountListPrimary, List<Account> accountListSecondary, LocalDate dateOfBirth, Address mail, Address address) {
-        this.accountListPrimary = accountListPrimary;
-        this.accountListSecondary = accountListSecondary;
-        this.dateOfBirth = dateOfBirth;
-        this.mail = mail;
-        this.address = address;
-    }
 
-    public Holders(LocalDate dateOfBirth, Address mail, Address address) {
-        this.dateOfBirth = dateOfBirth;
-        this.mail = mail;
-        this.address = address;
-    }
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 

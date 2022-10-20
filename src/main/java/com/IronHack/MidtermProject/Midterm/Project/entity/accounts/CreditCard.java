@@ -32,19 +32,20 @@ public class CreditCard extends Account {
         this.creditLimit = creditLimit;
     }
 
-
-
-    public CreditCard(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate, Money interestRate,
-                      Money creditLimit) {
-        super(balance, primaryOwner, secondaryOwner, creationDate);
+    public CreditCard(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey,
+                      LocalDate creationDate, Money interestRate, Money creditLimit) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
         this.interestRate = interestRate;
         this.creditLimit = creditLimit;
     }
 
-    public CreditCard(Money balance, Holders primaryOwner, Holders secondaryOwner, LocalDate creationDate) {
-        super(balance, primaryOwner, secondaryOwner, creationDate);
+    public CreditCard(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey,
+                      LocalDate creationDate) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
 
     }
+
+
 
     //--------------------------- GETTERS & SETTERS: -------------------------
 
