@@ -1,5 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.services.servicesUser;
 
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderAccessBalanceDTO;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.HolderTransferMoneyDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
@@ -30,7 +31,9 @@ public class HoldersService implements HoldersInterface {
     @Autowired
     HoldersRepository holdersRepository;
 
-    //------ HOLDERS ACCESS BALANCE SAVINGS ACCOUNT---------
+
+
+    /*//------ HOLDERS ACCESS BALANCE SAVINGS ACCOUNT---------
     public Savings getSavingAccountByBalance(Long holderId) {
         return savingsRepository.findById(holderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Savings Account with the given id does not exist"));
     }
@@ -43,6 +46,18 @@ public class HoldersService implements HoldersInterface {
     //------ HOLDERS ACCESS BALANCE CREDIT CARD ACCOUNT---------
     public CreditCard getCreditCardAccountByBalance(Long holderId) {
         return creditCardRepository.findById(holderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Credit Card Account with the given id does not exist"));
+    }*/
+
+    //------ HOLDERS ACCESS BALANCE ACCOUNT---------
+
+    public Money accessBalanceAccount(Long holderId, Long holderAccountId) {
+        Holders holder = holdersRepository.findById(holderId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this Holder doesn't exist"));
+        Optional<Account> account22 = holder.getAccountListPrimary().stream().filter((account)->account.getId() == holderAccountId).findFirst();
+        if (account22.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist**4");
+        }
+        return account22.get().getBalance();
     }
 
     //------ HOLDERS MAKE TRANSFER TO ACCOUNT---------
@@ -51,14 +66,14 @@ public class HoldersService implements HoldersInterface {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this Holder doesn't exist"));
         Optional <Account> account1 = makerId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoneyDTO.getHolderAccountId()).findFirst();
         if(account1.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist**");
         }
 
         Holders receiverId = holdersRepository.findById(holderTransferMoneyDTO.getHolderReceivesId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this Holder receiver doesn't exist"));
         Optional <Account> account2 = receiverId.getAccountListPrimary().stream().filter((account)-> account.getId() == holderTransferMoneyDTO.getHolderAccountReceivesId()).findFirst();
         if(account2.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of the account Holder doesn't exist***");
         }
 
 

@@ -1,5 +1,6 @@
 package com.IronHack.MidtermProject.Midterm.Project.controllers;
 
+import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Address;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Admin;
@@ -11,6 +12,7 @@ import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.Credit
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.SavingsRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.AdminRepository;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.HoldersRepository;
+import com.IronHack.MidtermProject.Midterm.Project.respositories.users.RoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.*;
@@ -50,6 +52,8 @@ public class AdminControllerTest {
     private WebApplicationContext webApplicationContext;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    RoleRepository roleRepository;
 
 
     private Admin admin1;
@@ -70,11 +74,11 @@ public class AdminControllerTest {
         holder = holdersRepository.save(new Holders("Pol Bermu", LocalDate.of(1998, 01, 01),
                 new Address("calle Falsa", "Springfild", "Russia", "12345"), "Julian", passwordEncoder.encode("1234")));
         holder2 = holdersRepository.save(new Holders("Anna Nana", LocalDate.of(2000, 10, 22),
-                new Address("calle Falsa", "Springfild", "Russia", "12345"), "Pablo", passwordEncoder.encode("1234")));
+                new Address("calle Mentirosa", "Springfild", "Russia", "12345"), "Pablo", passwordEncoder.encode("1234")));
         accountSaving = savingsRepository.save(new Savings(new Money(new BigDecimal(800)), new Money(), holder, holder2,
                 "1234", LocalDate.of(1998, 01, 01)));
         accountChecking = checkingsRepository.save(new Checking(new Money(new BigDecimal(550)), new Money(new BigDecimal(40)), holder2, holder,
-                "1234", LocalDate.of(1977, 01, 01)));
+                "1234"));
         accountCreditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(850)),
                 new Money(new BigDecimal(40)), holder, holder2, "1234",
                 LocalDate.of(1958, 01, 01)));
@@ -85,13 +89,52 @@ public class AdminControllerTest {
 
     @AfterEach
     void tearDown(){
+        creditCardRepository.deleteAll();
+        checkingsRepository.deleteAll();
+        savingsRepository.deleteAll();
+        roleRepository.deleteAll();
+        adminRepository.deleteAll();
+        holdersRepository.deleteAll();
 
     }
 
-   //ME FALTA TEST DE CREAR ACCOUNT x3
 
     @Test
-    @DisplayName("Modify Balance Account Savings")
+    @DisplayName("Create Savings Account")
+    void post_Create_SavingAccount_isOk() throws Exception {
+        AdminCreateAccountDTO adminCreateAccountDTO = new AdminCreateAccountDTO(holder.getId(), new BigDecimal(400), LocalDate.now(), null, "7894");
+        adminCreateAccountDTO.setInterestRate(new BigDecimal(0.15));
+        adminCreateAccountDTO.setMinimBalance(new BigDecimal(250));
+        MvcResult mvcResult = mockMvc.perform(post("/admin-createSavingsAccount/").content(objectMapper.writeValueAsString(adminCreateAccountDTO)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains(holder.getId().toString()));
+    }
+
+    @Test
+    @DisplayName("Create Checking Account")
+    void post_Create_CheckingAccount_isOk() throws Exception {
+        AdminCreateAccountDTO adminCreateAccountDTO = new AdminCreateAccountDTO(holder.getId(), new BigDecimal(400), LocalDate.now(), null, "7894");
+        adminCreateAccountDTO.setInterestRate(new BigDecimal(0.15));
+        adminCreateAccountDTO.setMinimBalance(new BigDecimal(250));
+        adminCreateAccountDTO.setDateOfBirth(LocalDate.of(1988,10,01));
+        MvcResult mvcResult = mockMvc.perform(post("/admin-createCheckingAccount/").content(objectMapper.writeValueAsString(adminCreateAccountDTO)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains(holder.getId().toString()));
+    }
+
+    @Test
+    @DisplayName("Create Credit Card Account")
+    void post_Create_CreditCardAccount_isOk() throws Exception {
+        AdminCreateAccountDTO adminCreateAccountDTO = new AdminCreateAccountDTO(holder.getId(), new BigDecimal(400), LocalDate.now(), null, "7894");
+        adminCreateAccountDTO.setInterestRate(new BigDecimal(0.15));
+        adminCreateAccountDTO.setMinimBalance(new BigDecimal(250));
+        MvcResult mvcResult = mockMvc.perform(post("/admin-createCreditCardAccount/").content(objectMapper.writeValueAsString(adminCreateAccountDTO)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getContentAsString().contains(holder.getId().toString()));
+    }
+
+    @Test
+    @DisplayName("Modify Balance Account")
     void patch_Account_ModifyBalance_isOk() throws Exception {
 
         String balance = objectMapper.writeValueAsString(new Money(new BigDecimal(400)));
@@ -106,13 +149,13 @@ public class AdminControllerTest {
 
 
     @Test
-    @DisplayName("Modify Balance Account Savings")
+    @DisplayName("Modify Error Balance Account Savings")
     void patch_Account_ModifyBalance_ErrorIdAccount_isOk() throws Exception {
 
         String idAccount = objectMapper.writeValueAsString(new Money(new BigDecimal(400)));
         System.out.println(idAccount);
 
-        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/5").content(idAccount).contentType(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(patch("/admin/modifyBalanceAccounts/55").content(idAccount).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound()).andReturn();
     }
 

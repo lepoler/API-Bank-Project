@@ -28,7 +28,9 @@ public class ThirdParty extends User {
     public ThirdParty(String name, String username, String password, String hashKey) {
         super(name, username, password);
         this.hashKey = hashKey;
+
     }
+
 
 //--------------------------- GETTERS & SETTERS: -------------------------
 

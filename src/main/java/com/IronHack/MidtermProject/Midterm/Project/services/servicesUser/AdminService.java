@@ -5,11 +5,14 @@ package com.IronHack.MidtermProject.Midterm.Project.services.servicesUser;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.entity.users.Holders;
+import com.IronHack.MidtermProject.Midterm.Project.entity.users.ThirdParty;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.accounts.*;
 import com.IronHack.MidtermProject.Midterm.Project.respositories.users.HoldersRepository;
+import com.IronHack.MidtermProject.Midterm.Project.respositories.users.ThirdPartyRepository;
 import com.IronHack.MidtermProject.Midterm.Project.services.interfacesUser.AdminInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,6 +34,10 @@ public class AdminService implements AdminInterface {
     CreditCardRepository creditCardRepository;
     @Autowired
     StudentCheckingRepository studentCheckingRepository;
+    @Autowired
+    ThirdPartyRepository thirdPartyRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     //------ ADMIN CREATE SAVING ACCOUNT---------
     public Savings createSavingsAccount(AdminCreateAccountDTO adminCreateAccountDTO) {
@@ -51,6 +58,8 @@ public class AdminService implements AdminInterface {
 
     }
 
+
+
     //------ ADMIN CREATE CHECKING ACCOUNT---------
     public Account createCheckingAccount(AdminCreateAccountDTO adminCreateAccountDTO) {
         if(accountRepository.findByBalanceAndPrimaryOwnerIdAndSecondaryOwnerIdAndCreationDate(
@@ -65,7 +74,7 @@ public class AdminService implements AdminInterface {
         }
         if(primaryOwner.getDateOfBirth().isBefore(LocalDate.of(1998, 01, 01))){
             return checkingsRepository.save(new Checking(new Money(adminCreateAccountDTO.getBalance()),new Money(new BigDecimal(40)), primaryOwner,
-                    secondaryOwner, "1234", adminCreateAccountDTO.getCreationDate()));
+                    secondaryOwner, "1234"));
         } else {
             return studentCheckingRepository.save(new StudentChecking(new Money(adminCreateAccountDTO.getBalance()), new Money(), primaryOwner,
                     secondaryOwner, adminCreateAccountDTO.getSecretKey(), adminCreateAccountDTO.getCreationDate()));
@@ -90,8 +99,6 @@ public class AdminService implements AdminInterface {
                     secondaryOwner, "1234", adminCreateAccountDTO.getCreationDate(), new Money(adminCreateAccountDTO.getMinimBalance()),
                     new Money(adminCreateAccountDTO.getInterestRate())));
     }
-
-
 
     //------ ADMIN MODIFY BALANCE ACCOUNTS---------
 
@@ -134,7 +141,17 @@ public class AdminService implements AdminInterface {
         Account deleteAccount = accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this account doesn't exist"));
         accountRepository.deleteById(accountId);
 
-
     }
+
+    //------ ADMIN CREATE THIRD PARTY ---------
+
+    public ThirdParty createThirdPartyDataBase(ThirdParty thirdParty) {
+        if(thirdPartyRepository.findByHashKey(thirdParty.getHashKey()).isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The Third Party already exist in actual Data Base");
+        }
+        thirdParty.setPassword(passwordEncoder.encode(thirdParty.getPassword()));
+        return thirdPartyRepository.save(thirdParty);
+    }
+
 
 }

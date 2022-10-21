@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                 .mvcMatchers(HttpMethod.PATCH,"/admin/modifyBalanceAccounts/{accountId}").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.GET,"/adminAccessBalanceAccount/{accountId}").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.DELETE,"/adminDeleteAccount/{accountId}").hasRole("ADMIN")
+                .mvcMatchers(HttpMethod.POST,"/admin-createThirdParty-DataBase/").hasRole("ADMIN")
                 .anyRequest().permitAll();
 
         httpSecurity.csrf().disable();

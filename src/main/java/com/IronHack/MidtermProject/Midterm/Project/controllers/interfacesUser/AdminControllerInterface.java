@@ -2,6 +2,7 @@ package com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser;
 
 import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
+import com.IronHack.MidtermProject.Midterm.Project.entity.users.ThirdParty;
 
 public interface AdminControllerInterface {
 
@@ -38,6 +39,9 @@ public interface AdminControllerInterface {
 
     //------ ADMIN DELETE ACCOUNT---------
     void deleteAccount(Long accountId);
+
+    //------ ADMIN CREATE THIRD PARTY ---------
+    ThirdParty createThirdPartyDataBase (ThirdParty thirdParty);
 }
 
 

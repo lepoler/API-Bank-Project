@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 public class StudentChecking extends Account {
 
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     //-------------------------------------------------------------------
 

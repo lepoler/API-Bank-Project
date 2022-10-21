@@ -52,10 +52,10 @@ public class MidtermProjectApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Holders holder1 = holdersRepository.save(new Holders("Pol", LocalDate.of(1992, 05, 01),
-				null, "juan", passwordEncoder.encode("1234")));
+		Holders holder1 = holdersRepository.save(new Holders("Alberto", LocalDate.of(1992, 05, 01),
+				null, "Dolores", passwordEncoder.encode("1234")));
 		Holders holder2 = holdersRepository.save(new Holders("Diana", LocalDate.of(1994, 07, 27),
-				null, "julian", passwordEncoder.encode("1234")));
+				null, "Asuncion", passwordEncoder.encode("1234")));
 		Admin administrador = adminRepository.save(new Admin("Manolo", "Julio0", passwordEncoder.encode("1234")));
 		roleRepository.save(new Role("ADMIN", administrador));
 		roleRepository.save(new Role("USER", holder1));
@@ -66,13 +66,13 @@ public class MidtermProjectApplication implements CommandLineRunner {
 				"1234", LocalDate.of(1998, 01, 01), new Money(new BigDecimal(250)), new Money(new BigDecimal(40))));
 		savingsRepository.save(accountSaving);
 
-		Checking accountChecking = checkingsRepository.save(new Checking(new Money(new BigDecimal(550)), new Money(new BigDecimal(40)), holder1, null,
-				"1234", LocalDate.of(1977, 01, 01)));
+		Checking accountChecking = checkingsRepository.save(new Checking(new Money(new BigDecimal(550)), new Money(new BigDecimal(40)), holder2, null,
+				"1234"));
 		checkingsRepository.save(accountChecking);
 
 
 		CreditCard accountCreditCard = creditCardRepository.save(new CreditCard(new Money(new BigDecimal(850)),
-				new Money(new BigDecimal(40)), holder1, holder2, "1234", LocalDate.of(1958, 01, 01)));
+				new Money(new BigDecimal(40)), holder1, null, "1234", LocalDate.of(1958, 01, 01)));
 
 		creditCardRepository.save(accountCreditCard);
 	}

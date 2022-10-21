@@ -20,7 +20,7 @@ public class Savings extends Account {
             @AttributeOverride(name = "amount", column = @Column(name = "amount_interestRate"))})
     private Money interestRate = new Money(new BigDecimal(0.0025));
 
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     //-------------------------------------------------------------------
 

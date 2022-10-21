@@ -23,7 +23,7 @@ public class AdminCreateAccountDTO {
 
     @NotNull
     private LocalDate creationDate;
-    @NotNull
+
     private Address address;
 
     private  Address secondaryAddress;

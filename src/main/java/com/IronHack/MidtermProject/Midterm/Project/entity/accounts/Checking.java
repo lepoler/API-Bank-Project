@@ -20,7 +20,7 @@ public class Checking extends Account {
             @AttributeOverride(name = "amount", column = @Column(name = "amount_monthlyMaintenanceFee"))})
     private final Money monthlyMaintenanceFee = new Money(new BigDecimal(12));
 
-    private Status status;
+    private Status status = Status.ACTIVE;
 
     //-------------------------------------------------------------------
 
@@ -30,8 +30,8 @@ public class Checking extends Account {
     public Checking() {
     }
 
-    public Checking(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey, LocalDate creationDate) {
-        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, creationDate);
+    public Checking(Money balance, Money penaltyFee, Holders primaryOwner, Holders secondaryOwner, String secretKey) {
+        super(balance, penaltyFee, primaryOwner, secondaryOwner, secretKey, LocalDate.now());
 
     }
 

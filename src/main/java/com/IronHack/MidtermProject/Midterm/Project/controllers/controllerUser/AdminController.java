@@ -3,6 +3,7 @@ package com.IronHack.MidtermProject.Midterm.Project.controllers.controllerUser;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.DTOs.AdminCreateAccountDTO;
 import com.IronHack.MidtermProject.Midterm.Project.controllers.interfacesUser.AdminControllerInterface;
 import com.IronHack.MidtermProject.Midterm.Project.entity.accounts.*;
+import com.IronHack.MidtermProject.Midterm.Project.entity.users.ThirdParty;
 import com.IronHack.MidtermProject.Midterm.Project.services.interfacesUser.AdminInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,14 @@ public class AdminController implements AdminControllerInterface {
 
          adminService.deleteAccount(accountId);
     }
+
+    //------ ADMIN CREATE THIRD PARTY ---------
+    @PostMapping("/admin-createThirdParty-DataBase/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ThirdParty createThirdPartyDataBase(@RequestBody @Valid ThirdParty thirdParty) {
+        return adminService.createThirdPartyDataBase(thirdParty);
+    }
+
 
 
 }

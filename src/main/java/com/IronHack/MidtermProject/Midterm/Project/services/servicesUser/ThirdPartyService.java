@@ -12,6 +12,7 @@ import com.IronHack.MidtermProject.Midterm.Project.respositories.users.ThirdPart
 import com.IronHack.MidtermProject.Midterm.Project.services.interfacesUser.ThirdPartyInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,6 +32,7 @@ public class ThirdPartyService implements ThirdPartyInterface {
     CreditCardRepository creditCardRepository;
     @Autowired
     ThirdPartyRepository thirdPartyRepository;
+
 
 
     public Account makeTransferToAccount(ThirdPartyDTO thirdPartyDTO, String hashKey) {
