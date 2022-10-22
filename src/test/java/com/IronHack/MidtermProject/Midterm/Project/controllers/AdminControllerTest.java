@@ -117,6 +117,7 @@ public class AdminControllerTest {
         adminCreateAccountDTO.setInterestRate(new BigDecimal(0.15));
         adminCreateAccountDTO.setMinimBalance(new BigDecimal(250));
         adminCreateAccountDTO.setDateOfBirth(LocalDate.of(1988,10,01));
+
         MvcResult mvcResult = mockMvc.perform(post("/admin-createCheckingAccount/").content(objectMapper.writeValueAsString(adminCreateAccountDTO)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andReturn();
 
         assertTrue(mvcResult.getResponse().getContentAsString().contains(holder.getId().toString()));

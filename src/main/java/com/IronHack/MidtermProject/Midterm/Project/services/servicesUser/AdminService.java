@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 public class AdminService implements AdminInterface {
@@ -72,7 +73,7 @@ public class AdminService implements AdminInterface {
         if(adminCreateAccountDTO.getSecondaryOwner() != null) {
             secondaryOwner = holdersRepository.findById(adminCreateAccountDTO.getSecondaryOwner()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
-        if(primaryOwner.getDateOfBirth().isBefore(LocalDate.of(1998, 01, 01))){
+        if(Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears() > 24){
             return checkingsRepository.save(new Checking(new Money(adminCreateAccountDTO.getBalance()),new Money(new BigDecimal(40)), primaryOwner,
                     secondaryOwner, "1234"));
         } else {
