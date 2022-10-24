@@ -33,21 +33,6 @@ public class HoldersService implements HoldersInterface {
 
 
 
-    /*//------ HOLDERS ACCESS BALANCE SAVINGS ACCOUNT---------
-    public Savings getSavingAccountByBalance(Long holderId) {
-        return savingsRepository.findById(holderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Savings Account with the given id does not exist"));
-    }
-
-    //------ HOLDERS ACCESS BALANCE CHECKING ACCOUNT---------
-    public Checking getCheckingAccountByBalance(Long holderId) {
-        return checkingsRepository.findById(holderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Checking Account with the given id does not exist"));
-    }
-
-    //------ HOLDERS ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    public CreditCard getCreditCardAccountByBalance(Long holderId) {
-        return creditCardRepository.findById(holderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Credit Card Account with the given id does not exist"));
-    }*/
-
     //------ HOLDERS ACCESS BALANCE ACCOUNT---------
 
     public Money accessBalanceAccount(Long holderId, Long holderAccountId) {

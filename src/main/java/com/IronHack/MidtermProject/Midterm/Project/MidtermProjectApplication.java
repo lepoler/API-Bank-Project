@@ -44,7 +44,7 @@ public class MidtermProjectApplication implements CommandLineRunner {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	//private Account accountChecking, accountSaving, accountCreditCard;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MidtermProjectApplication.class, args);
 	}

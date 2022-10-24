@@ -109,28 +109,6 @@ public class AdminService implements AdminInterface {
         return accountRepository.save(account1);
     }
 
-
-    //------ ADMIN MODIFY BALANCE SAVING ACCOUNT---------
-    /*public Savings modifyBalanceSavingsAccount(Long id, Money balance) {
-        Savings savings1 = savingsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The id of this account doesn't exist"));
-        savings1.setBalance(balance);
-        return savingsRepository.save(savings1);
-    }
-
-    //------ ADMIN MODIFY BALANCE CHECKING ACCOUNT---------
-    public Checking modifyBalanceCheckingAccount(Long id, Money balance) {
-        Checking checking1 = checkingsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        checking1.setBalance(balance);
-        return checkingsRepository.save(checking1);
-    }
-
-    //------ ADMIN MODIFY BALANCE CREDIT CARD ACCOUNT---------
-    public CreditCard modifyBalanceCreditCardAccount(Long id, Money balance) {
-        CreditCard creditCard1 = creditCardRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        creditCard1.setBalance(balance);
-        return creditCardRepository.save(creditCard1);
-    }*/
-
     //------ ADMIN ACCESS BALANCE ACCOUNT---------
     public Money getSavingAccountByBalance(Long accountId) {
         return accountRepository.findById(accountId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "A Account with the given id does not exist")).getBalance();

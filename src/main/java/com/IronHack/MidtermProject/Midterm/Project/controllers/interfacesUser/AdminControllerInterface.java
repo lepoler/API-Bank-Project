@@ -18,24 +18,10 @@ public interface AdminControllerInterface {
     //------ ADMIN MODIFY BALANCE ACCOUNTS---------
     Account modifyBalanceAccounts(Long accountId, Money balance);
 
-    /*//------ ADMIN MODIFY BALANCE SAVING ACCOUNT---------
-    Savings modifyBalanceSavingsAccount(Long accountId, Money balance);
-
-    //------ ADMIN MODIFY BALANCE CHECKING ACCOUNT---------
-    Checking modifyBalanceCheckingAccount (Long accountId, Money balance);
-
-    //------ ADMIN MODIFY BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard modifyBalanceCreditCardAccount (Long accountId, Money balance);
-    */
 
     //------ ADMIN ACCESS BALANCE ACCOUNT---------
     Money getSavingAccountByBalance(Long accountId);
 
-   /* //------ ADMIN ACCESS BALANCE CHECKING ACCOUNT---------
-    Checking getCheckingAccountByBalance(Long accountId);
-
-    //------ ADMIN ACCESS BALANCE CREDIT CARD ACCOUNT---------
-    CreditCard getCreditCardAccountByBalance(Long accountId);*/
 
     //------ ADMIN DELETE ACCOUNT---------
     void deleteAccount(Long accountId);
